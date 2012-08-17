@@ -111,6 +111,17 @@ class MultiTableUpdateExecutor extends AbstractSqlExecutor
 
                         ++$this->_numParametersInUpdateClause;
                     }
+
+                    if ($newValue instanceof AST\SimpleArithmeticExpression) {
+                        foreach($newValue->arithmeticTerms as $term) {
+                            $paramKey = $term->name;
+                            $this->_sqlParameters[$i]['parameters'][] = $sqlWalker->getQuery()->getParameter($paramKey);
+                            $this->_sqlParameters[$i]['types'][] = $sqlWalker->getQuery()->getParameterType($paramKey);
+
+                            ++$this->_numParametersInUpdateClause;
+                        }
+                    }
+
                 }
             }
 
