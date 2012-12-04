@@ -445,7 +445,7 @@ class SqlWalker implements TreeWalker
 
         $filterClauses = array();
         foreach ($this->em->getFilters()->getEnabledFilters() as $filter) {
-            if ('' !== $filterExpr = $filter->addFilterConstraint($targetEntity, $targetTableAlias)) {
+            if ('' !== $filterExpr = $filter->addFilterConstraint($targetEntity, $targetTableAlias, $this->getQuery())) {
                 $filterClauses[] = '(' . $filterExpr . ')';
             }
         }
